@@ -1,0 +1,36 @@
+//functions
+// liquidate()
+
+#define macro CONSTRUCTOR() = takes (0) returns (0) {
+
+}
+
+#define macro SUPPLY() = takes (0) returns (0) {
+    0x00 calldataload
+}
+
+#define macro BORROW() = takes (0) returns (0) {
+    0x01 calldataload
+    // how do we check how much collateral the user has provided?
+    // how do we call the oracle?
+    // how do we store the loan so its still liquidateable?
+}
+
+#define macro CHECK_LIQUIDATION() = takes (0) returns (0) {
+
+}
+
+#define macro LIQUIDATE() = takes (0) returns (0) {
+
+}
+
+#define macro MAIN() = takes (0) returns (0) {
+    calldatasize 0x34 eq supply jumpi
+    calldatasize 0x35 eq borrow jumpi
+    calldatasize 0x eq liquidate jumpi
+
+    supply:
+        SUPPLY()
+    borrow:
+        BORROW()
+}
