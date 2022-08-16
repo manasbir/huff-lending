@@ -1,16 +1,24 @@
 //functions
 // liquidate()
+#define function borrow(address _token, uint256 _amount, address _collateral)
+#define function supply(address _token, uint256 _amount)
+#define function liquidate(address _token, uint256 _amount, address _collateral, uint collateralAmount)
+
+
+// loans will be stored as a mapping of sha3(msg.sender, token)
+// collateral will me also stored as a mapping of sha3(msg.sender, token), will also need to add a salt
+// mapping of 
 
 #define macro CONSTRUCTOR() = takes (0) returns (0) {
 
 }
 
 #define macro SUPPLY() = takes (0) returns (0) {
-    0x00 calldataload
+
 }
 
 #define macro BORROW() = takes (0) returns (0) {
-    0x01 calldataload
+    
     // how do we check how much collateral the user has provided?
     // how do we call the oracle?
     // how do we store the loan so its still liquidateable?
@@ -24,13 +32,16 @@
 
 }
 
-#define macro MAIN() = takes (0) returns (0) {
-    calldatasize 0x34 eq supply jumpi
-    calldatasize 0x35 eq borrow jumpi
+#define macro MAIN() = takes (0) returns (1) {
+    0x00 calldataload // put at top of stack for smaller code size
+    calldatasize 0x eq supply jumpi
+    calldatasize 0x eq borrow jumpi
     calldatasize 0x eq liquidate jumpi
 
     supply:
         SUPPLY()
     borrow:
         BORROW()
+    liquidate:
+        LIQUIDATE()
 }
