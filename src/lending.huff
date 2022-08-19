@@ -9,6 +9,8 @@
 // collateral will me also stored as a mapping of sha3(msg.sender, token), will also need to add a salt
 // mapping of 
 
+// calling an oracle will be a fun challenge
+
 #define macro CONSTRUCTOR() = takes (0) returns (0) {
 
 }
