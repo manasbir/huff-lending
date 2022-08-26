@@ -22,8 +22,20 @@
 #define macro BORROW() = takes (0) returns (0) {
     
     // how do we check how much collateral the user has provided?
+    // -- tranferFrom(collateral, msg.sender, collateralAmount)
+    // -- check to see if we have enough collateral to cover the loan
+    // -- balanceOf(_borrowing, address(this))..... or better yet, 
+    // -- create a mapping that is just balanceOfAddressThisToToken
+    // -- saves 2400 + mem_expansion_cost + push + 100 for staticall
+    // -- relative to just sload and sha3, this is a lot cheaper
+
     // how do we call the oracle?
+    // -- staticall(0 gas, tokenToOracle(token), abi.encode(latestRoundData() pointer in memory,
+    // -- 0x04 (size is just fn sig), offset, uint80 + int256 size)
+    // -- then do some decimal math to make the numbers work out
+
     // how do we store the loan so its still liquidateable?
+    // -- done!
 }
 
 #define macro CHECK_LIQUIDATION() = takes (0) returns (0) {
@@ -33,6 +45,8 @@
 #define macro LIQUIDATE() = takes (0) returns (0) {
 
 }
+
+#define macro CHECK_
 
 #define macro MAIN() = takes (0) returns (1) {
     0x00 calldataload // put at top of stack for smaller code size

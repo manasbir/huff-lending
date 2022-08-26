@@ -19,4 +19,4 @@ this would save 273 (68 gas per calldata byte * 4 bc function selector is 4 msb,
 
 an issue arises when the functions end up having the same size. ex: function1(uint256, uint256), function2(uint256, uint256)
 
-a simple solution that will only cost 3 (4 actually but 3 bc it allows for another saving) gas per function. just add a 0 to the front of the calldata, increasing the calldatasize by 1. that would distinguish each function with the same calldata size. 
+a simple solution that will only cost 3 (4 actually but 3 bc it allows for another saving) gas per function. just add a 0 to the front of the calldata, increasing the calldatasize by 1. that would distinguish each function with the same calldata size.
