@@ -53,7 +53,7 @@
     dup1 0x44 mstore
 
     0x00 0x00 0x64 0x00 0x00
-    //
+    // get the token address here via dup
 
 
 
