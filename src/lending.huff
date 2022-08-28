@@ -6,9 +6,9 @@
 #define function addTokens(address _token, address _oracle, uint8 _decimals, uint _rate, bool _isCollateral, uint _liquidatationPenalty, uint _liquidatationRate, uint _collateralizationRatio)
 
 
-// loans will be stored as a mapping of sha3(msg.sender, token)
+// loans will be stored as a mapping of sha3(msg.sender, token, and collateral[])
 // collateral will me also stored as a mapping of sha3(msg.sender, token), will also need to add a salt
-// mapping of tokens and info will be  sha3(token)
+// mapping of tokens and info will be sha3(token)
 
 // calling an oracle will be a fun challenge.... nvm
 
@@ -45,6 +45,13 @@
     // fn sig, msgsender, address(this), amount
     // can't be packed :c
     // so i will have to use 4 mstores
+    // really want to find a workaround for this
+    // but there probably isnt one
+    0x23b872dd 0x00 mstore
+    caller 0x04 mstore
+    address 0x24 mstore
+    0x44 mstore
+
 
 
 }
@@ -79,7 +86,7 @@
 }
 
 #define macro LIQUIDATE() = takes (0) returns (0) {
-    // if there is multiple collateral 
+    // if there is multiple collateral ig just liquidate one
 
 }
 
