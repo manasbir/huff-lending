@@ -1,25 +1,57 @@
 //functions
 // liquidate()
-#define function borrow(address _token, uint256 _amount, address _collateral)
+#define function borrow(address _token, uint256 _amount, address[] _collateral)
 #define function supply(address _token, uint256 _amount)
 #define function liquidate(address _token, uint256 _amount, address _collateral, uint collateralAmount)
+#define function addTokens(address _token, address _oracle, uint8 _decimals, uint _rate, bool _isCollateral, uint _liquidatationPenalty, uint _liquidatationRate, uint _collateralizationRatio)
 
 
 // loans will be stored as a mapping of sha3(msg.sender, token)
 // collateral will me also stored as a mapping of sha3(msg.sender, token), will also need to add a salt
-// mapping of 
+// mapping of tokens and info will be  sha3(token)
 
-// calling an oracle will be a fun challenge
+// calling an oracle will be a fun challenge.... nvm
 
 #define macro CONSTRUCTOR() = takes (0) returns (0) {
 
 }
 
 #define macro SUPPLY() = takes (0) returns (0) {
+    // when u supply a token
+    // -- check if the token is in the mapping of collateral tokens
+    // -- transfer the collateral to the contract
+    // -- update contract balance of the token
+    // -- update the sha3(msg.sender, token) mapping of the token
+
+
+
+
+    // [token addy but with dirty bits]
+    dup1
+    0x00 mstore
+    0x00 0x20 sha3  // [hash of token, token with dirty bits]
+    dup1
+    sload   // [token's _blank_, hash of token, token with dirty bits]
+    dup1
+    notInvalidToken jumpi
+    
+        0x01 0x00 mstore
+        0x00 0x01 revert    // 0x01 will act like an error code for invalid token
+    
+    notInvalidToken:
+    0x60 shr    // [token's _blank _, hash of token, token(clean)]
+    0x20 calldataload   // [amount, token's_blank, hash of token, token(clean)]
+    // we want calldata to look like:
+    // fn sig, msgsender, address(this), amount
+    // can't be packed :c
+    // so i will have to use 4 mstores
+
 
 }
 
 #define macro BORROW() = takes (0) returns (0) {
+    0x60 shr    // [_token]
+
     
     // how do we check how much collateral the user has provided?
     // -- tranferFrom(collateral, msg.sender, collateralAmount)
@@ -33,6 +65,10 @@
     // -- staticall(0 gas, tokenToOracle(token), abi.encode(latestRoundData() pointer in memory,
     // -- 0x04 (size is just fn sig), offset, uint80 + int256 size)
     // -- then do some decimal math to make the numbers work out
+    // -- convert int to uint
+
+    // wish there was a way to make a price system that is not dependent on an oracle
+    // 
 
     // how do we store the loan so its still liquidateable?
     // -- done!
@@ -43,13 +79,15 @@
 }
 
 #define macro LIQUIDATE() = takes (0) returns (0) {
+    // if there is multiple collateral 
 
 }
 
-#define macro CHECK_
+// how to update fees and distribute?
+
 
 #define macro MAIN() = takes (0) returns (1) {
-    0x00 calldataload // put at top of stack for smaller code size
+    0x00 calldataload // put at top of stack for smaller code size sheeesh
     calldatasize 0x eq supply jumpi
     calldatasize 0x eq borrow jumpi
     calldatasize 0x eq liquidate jumpi
