@@ -39,8 +39,8 @@
         0x00 0x01 revert    // 0x01 will act like an error code for invalid token
     
     notInvalidToken:
-    0x60 shr    // [token's _blank _, hash of token, token(clean)]
-    0x20 calldataload   // [amount, token's_blank, hash of token, token(clean)]
+    //0x60 shr    // [token's _blank _, hash of token, token(clean)]
+    0x20 calldataload   // [amount, token's_blank, hash of token]
     // we want calldata to look like:
     // fn sig, msgsender, address(this), amount
     // can't be packed :c
@@ -50,9 +50,10 @@
     0x23b872dd 0x00 mstore
     caller 0x04 mstore
     address 0x24 mstore
-    0x44 mstore
+    dup1 0x44 mstore
 
     0x00 0x00 0x64 0x00 0x00
+    //
 
 
 
