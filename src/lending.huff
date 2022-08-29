@@ -1,9 +1,8 @@
 //functions
-// liquidate()
 #define function borrow(address _token, uint256 _amount, address[] _collateral)
 #define function supply(address _token, uint256 _amount)
 #define function liquidate(address _token, uint256 _amount, address _collateral, uint collateralAmount)
-#define function addTokens(address _token, address _oracle, uint8 _decimals, uint _rate, bool _isCollateral, uint _liquidatationPenalty, uint _liquidatationRate, uint _collateralizationRatio)
+#define function addTokens(address _token, address _oracle, uint8 _decimals/* will be either 18 or 8 as depends on what type of prices we are comparing to */, bool _isCollateral, uint _liquidatationPenalty, uint _liquidatationRate, uint _collateralizationRatio)
 
 
 // loans will be stored as a mapping of sha3(msg.sender, token, and collateral[])
@@ -33,6 +32,7 @@
     dup1
     sload   // [token's _blank_, hash of token, token with dirty bits]
     dup1
+
     notInvalidToken jumpi
     
         0x01 0x00 mstore
@@ -54,6 +54,20 @@
 
     0x00 0x00 0x64 0x00 0x00
     // get the token address here via dup
+    dupWHATEVER
+    0x7530 //30k in hex
+    call
+    
+    transferSuccessful jumpi
+    0x02 0x00 mstore
+    0x00 0x01 revert
+
+    transferSuccessful:
+    // []
+
+
+
+
 
 
 
