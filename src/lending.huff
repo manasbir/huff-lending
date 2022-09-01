@@ -11,6 +11,11 @@
 
 // calling an oracle will be a fun challenge.... nvm
 
+
+// want some sort of automated algorithm to auto change lending rates
+// to maximize capital efficiency
+
+
 #define macro CONSTRUCTOR() = takes (0) returns (0) {
 
 }
@@ -28,7 +33,7 @@
     // [token addy but with dirty bits]
     dup1
     0x00 mstore
-    0x00 0x20 sha3  // [hash of token, token with dirty bits]
+    0x00 0x14 sha3  // [hash of token, token with dirty bits]
     dup1
     sload   // [token's _blank_, hash of token, token with dirty bits]
     dup1
@@ -63,6 +68,8 @@
     0x00 0x01 revert
 
     transferSuccessful:
+    // all the stack needs is hash of token, token, amount
+    
     // []
 
 
@@ -82,6 +89,7 @@
     // -- check to see if we have enough collateral to cover the loan
     // -- balanceOf(_borrowing, address(this))..... or better yet, 
     // -- create a mapping that is just balanceOfAddressThisToToken
+    // ---- address will need to warmed for later anyways, no point
     // -- saves 2400 + mem_expansion_cost + push + 100 for staticall
     // -- relative to just sload and sha3, this is a lot cheaper
 
