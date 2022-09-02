@@ -81,7 +81,7 @@
 }
 
 #define macro BORROW() = takes (0) returns (0) {
-    0x60 shr    // [_token]
+    // 0x60 shr    // [_token]
 
     
     // how do we check how much collateral the user has provided?
@@ -100,7 +100,8 @@
     // -- convert int to uint
 
     // wish there was a way to make a price system that is not dependent on an oracle
-    // 
+    // -- this is just a market
+    // -- we a little dumb
 
     // how do we store the loan so its still liquidateable?
     // -- done!
